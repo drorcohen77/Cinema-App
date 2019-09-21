@@ -30,20 +30,22 @@
                 COULD'T FIND THE MOVIE YOU WHERE LOOKING FOR. PLEASE TRY ANOTHER MOVIE NAME.
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-xs-12 allmovies" *ngFor="let movie of allMovies;let i=index">
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of allMovies;let i=index">
                     <div class="card-deck">
                         <div class="card">
+                            <!-- <div *ngIf="movie.Poster==''" class="alert alert-danger">
+                                <img src="assets/images/no_images.png" class="card-img-top" alt="" style="width: auto; height: 250px;">
+                            </div> -->
                             <img src="{{movie.Poster}}" class="card-img-top" alt="" style="width: auto; height: 250px;">
                             <div class="card-body">
                                 <h5 class="card-title">{{movie.Title | title}}</h5>
                                 <div class="edit_del_buttons">
                                     <button class='btn btn-primary p_buttons' (click)='editMovie(movie.imdbID,content)'>
-                            <span class='glyphicon glyphicon-pencil'><i class="fas fa-pencil-alt"></i></span>
-                        </button>
-
+                                        <span class='glyphicon glyphicon-pencil'><i class="fas fa-pencil-alt"></i></span>
+                                    </button>
                                     <button type="button" class="btn btn-danger del_icon" (click)='deletMovie(movie.imdbID,delcontent)'>
-                        <i class="far fa-trash-alt"></i>
-                    </button>
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +54,14 @@
             </div>
         </div>
     </div>
+
 </div>
+
+
+<div class="footer">
+    <p>DOWN FOOTER</p>
+</div>
+
 
 
 <ng-template #content let-c="close" let-d="dismiss">
