@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class MoviesService {
 
-  private omdbMovies = "http://www.omdbapi.com/?";
+  private omdbMovies = "https://www.omdbapi.com/?";
   private apiKey = "&apikey=6f79e721";
   private allMovies = "s=money&Type=movie&y=2019";
   private searchMovies = "s=";
