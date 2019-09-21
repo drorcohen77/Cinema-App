@@ -29,7 +29,7 @@ export class MainComponent implements OnInit {
   private movieID: string = '';
   private modalRef: any;
   private addedMovie: Movie;
-  private tempMovie: Object = {};  
+  // private tempMovie: Object = {};  
   
 
   constructor(private MovieService: MoviesService, private modalService: NgbModal) { }
@@ -56,10 +56,6 @@ export class MainComponent implements OnInit {
     this.MovieService.getPickedMovie(movieID).subscribe(
       (Pickedmovie: Movie) => {
         this.pickedMovie = Pickedmovie;
-      // if(Pickedmovie.imdbID == this.tempMovie.movieID)
-      //   this.pickedMovie = Pickedmovie;
-      // else
-      //   this.pickedMovie = this.tempMovie;
       },
       (errorResponse) => {
         this.errors = errorResponse.error.errors;
@@ -106,8 +102,6 @@ export class MainComponent implements OnInit {
     if(!this.titleError && this.validateYear) {
       
       this.allMovies.push(this.pickedMovie);
-      this.tempMovie = this.pickedMovie;
-      console.log(this.tempMovie);
       this.modalRef.close();
     }
   }

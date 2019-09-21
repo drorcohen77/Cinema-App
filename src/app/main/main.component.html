@@ -21,7 +21,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 col-xs-0 col-lg-4"></div>
     </div>
 
     <div class="list_movies scroll">
@@ -33,9 +32,6 @@
                 <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of allMovies;let i=index">
                     <div class="card-deck">
                         <div class="card">
-                            <!-- <div *ngIf="movie.Poster==''" class="alert alert-danger">
-                                <img src="assets/images/no_images.png" class="card-img-top" alt="" style="width: auto; height: 250px;">
-                            </div> -->
                             <img src="{{movie.Poster}}" class="card-img-top" alt="" style="width: auto; height: 250px;">
                             <div class="card-body">
                                 <h5 class="card-title">{{movie.Title | title}}</h5>

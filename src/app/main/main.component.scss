@@ -1,12 +1,12 @@
     .addbutton {
         width: 120px;
         padding-right: 0px;
-        margin-right: 10px;
+        // margin-right: 10px;
     }
     
     .search {
-        width: 200px;
-        padding-left: 0px;
+        width: 180px;
+        // padding-left: 0px;
         padding-right: 0px;
     }
     
@@ -37,6 +37,11 @@
         color: #D9230F;
         border-left: 0;
         border-radius: 0px 20px 20px 0px;
+    }
+    
+    .search-query {
+        padding-left: 10px !important;
+        font-size: 14px;
     }
     
     .search-query:focus+button {
