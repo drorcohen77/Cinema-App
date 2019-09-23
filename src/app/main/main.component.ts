@@ -1,8 +1,8 @@
-import { Movie } from './../Services/movie.model';
 import { Component, OnInit } from '@angular/core';
-import { MoviesService } from '../Services/movies.service';
+import { MoviesService } from '../shared/movies.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { Movie } from '../shared/movie.model';
 
 
 @Component({
@@ -25,11 +25,12 @@ export class MainComponent implements OnInit {
   public validateYear: Boolean = true;
   public validatSearch: Boolean = true;
   public validatResults: Boolean = true;
+  public noPic: string = 'assets/images/no_images.png';
 
   private movieID: string = '';
   private modalRef: any;
   private addedMovie: Movie;
-  // private tempMovie: Object = {};  
+  private tempMovie: any;  
   
 
   constructor(private MovieService: MoviesService, private modalService: NgbModal) { }
@@ -39,8 +40,14 @@ export class MainComponent implements OnInit {
     this.MovieService.getMovies().subscribe(
       (Movies) => {
         this.allMovies = Movies.Search;
+        
+        for (let i=0;i<this.allMovies.length;i++) {
+          if(this.allMovies[i].Poster == 'N/A')
+            this.allMovies[i].Poster = this.noPic;
         console.log(this.allMovies);
         console.log(this.allMovies[1].Title);
+        console.log(this.allMovies[5].Poster)
+        }
       },
       (errorResponse) => {
         this.errors = errorResponse.error.errors;}
@@ -49,13 +56,23 @@ export class MainComponent implements OnInit {
   }
 
   editMovie(movieID,content) {
-    console.log(movieID);
+    
     this.AddEdit = "Edit";
     this.pickedMovie = new Movie;
 
     this.MovieService.getPickedMovie(movieID).subscribe(
       (Pickedmovie: Movie) => {
-        this.pickedMovie = Pickedmovie;
+        
+
+        if(this.tempMovie != undefined){
+          if(this.tempMovie.imdbID == Pickedmovie.imdbID) {
+            this.pickedMovie =this.tempMovie;
+          }
+        }else{
+          for(let i=0;i<this.allMovies.length;i++) {
+              this.pickedMovie = Pickedmovie;
+          }
+        }
       },
       (errorResponse) => {
         this.errors = errorResponse.error.errors;
@@ -77,7 +94,8 @@ export class MainComponent implements OnInit {
 
         if(!this.titleError && this.validateYear) {
       
-          this.allMovies[i]= this.pickedMovie;
+          this.allMovies[i].Title= this.pickedMovie.Title;
+          this.tempMovie = this.pickedMovie;
           this.modalRef.close();
         }
       }
@@ -104,6 +122,10 @@ export class MainComponent implements OnInit {
       this.allMovies.push(this.pickedMovie);
       this.modalRef.close();
     }
+  }
+
+  cancelButton() {
+
   }
 
   deletMovie(movieID,delcontent) {
