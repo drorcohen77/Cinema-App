@@ -16,7 +16,6 @@ import { MainModule } from './main/movies.module';
   declarations: [
     AppComponent,
     HeaderComponent
-    // TitlePipe
   ],
   imports: [
     MainModule,
