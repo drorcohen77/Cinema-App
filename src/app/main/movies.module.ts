@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MainComponent } from '../main/main.component';
 
 import { TitlePipe } from '../common/Pipes/title.pipe';
-import { MoviesService } from '../shared/movies.service';
+import { MoviesService } from '../store/movies.service';
 
 
 

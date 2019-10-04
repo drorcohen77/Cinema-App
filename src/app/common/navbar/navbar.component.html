@@ -1,57 +1,39 @@
-<div class="main_comp">
-
-    <div class="list_movies scroll">
-        <div class="container">
-            <div *ngIf="!MovieService.validatResults" class="alert alert-danger">
-                COULD'T FIND THE MOVIE YOU WHERE LOOKING FOR. PLEASE TRY ANOTHER MOVIE NAME.
-            </div>
-            <div class="row">
-                <!-- using async pipe on the *ngFor to access to the allMovies$ (below) Observable insted of using subscribe() in .ts -->
-                <!-- <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of (allMovies$ | async);let i=index"> -->
-                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index">
-                    <div class="card-deck">
-                        <div class="card">
-                            <img src="{{movie.Poster}}" class="card-img-top" alt="" style="width: 100%; height: 250px;">
-                            <div class="card-body">
-                                <h5 class="card-title">{{movie.Title | title}}</h5>
-                                <div class="edit_del_buttons">
-                                    <button class='btn btn-primary p_buttons' (click)='editMovie(movie.imdbID,content)'>
-                                        <span class='glyphicon glyphicon-pencil'><i class="fas fa-pencil-alt"></i></span>
-                                    </button>
-                                    <button type="button" class="btn btn-danger del_icon" (click)='deletMovie(movie.imdbID,delcontent)'>
-                                        <i class="far fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="row card-body bg-light middle_fotter">
+    <div class="col-md-6 col-xs-2 col-lg-4 addbutton">
+        <div>
+            <button (click)="addMovie(content)" class="btn btn-primary nav_buttons Administrator">Add Movie</button>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-5 col-lg-4 search">
+        <div id="custom-search-input">
+            <div class="input-group">
+                <input type="Search" class="search-query form-control" placeholder="Search for movie" name="Search" [(ngModel)]="item" />
+                <span class="input-group-btn">
+                  <button class="btn btn-warning" type="submit" (click)="searchMovie()">
+                      <span><i class="fas fa-search"></i></span>
+                </button>
+                </span>
+                <div *ngIf="!validatSearch" class="alert alert-danger">
+                    There is to many results please specify your search.
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
-
-<div class="footer">
-    <p>DOWN FOOTER</p>
-</div>
-
 
 
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header add_edit_modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Edit Movie:
-            <p>{{pickedMovie.Title}}</p>
+        <h4 class="modal-title" id="modal-basic-title">Add Your Movie:
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
+                <span aria-hidden="true">&times;</span>
+            </button>
     </div>
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
-                <form #editMovie="ngForm">
+                <form #addMovie="ngForm">
                     <div class="form-group">
                         <label for="Title">Title</label>
                         <input [(ngModel)]="pickedMovie.Title" name="Title" type="text" class="form-control" id="Title" required #Title="ngModel">
@@ -103,34 +85,12 @@
                             </div>
                         </div>
                     </div>
-
-                    <div *ngIf="errors.length > 0" class="alert alert-danger modal-error">
-                        <p *ngFor="let error of errors">
-                            {{error.detail}}
-                        </p>
-                    </div>
                     <div class="modal-footer">
-                        <button [disabled]="!editMovie.form.valid" (click)="editSubmition(pickedMovie)" type="button" class="btn btn-success">Edit Movie</button>
+                        <button [disabled]="!addMovie.form.valid" (click)="addSubmition()" type="button" class="btn btn-success">Add Movie</button>
                         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-</ng-template>
-
-<ng-template #delcontent let-c="close" let-d="dismiss">
-    <div class="modal-header del_modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{pickedMovie.Title}} is going to be deleted!</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <p>Are you sure you want to delete {{pickedMovie.Title}} movie?</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" (click)="deletSubmition(pickedMovie.imdbID)">Ok</button>
-        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
     </div>
 </ng-template>
