@@ -10,8 +10,8 @@ import { Movie } from 'src/app/shared/movie.model';
 })
 export class NavbarComponent implements OnInit {
 
-  private validatSearch: Boolean = true;
-  private item:string = '';
+  public validatSearch: Boolean = true;
+  public item:string = '';
   private modalRef: any;
   
   public pickedMovie: Movie;
