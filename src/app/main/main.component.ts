@@ -28,7 +28,7 @@ export class MainComponent implements OnInit, OnDestroy {
     
     // using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
     // the subscribe method get's us to the _value property inside the Observable where the data from the API request is stored
-    // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)//
+    // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)
 
     this._allMovies$.subscribe(Movie => { 
       this._movieList = Movie;
