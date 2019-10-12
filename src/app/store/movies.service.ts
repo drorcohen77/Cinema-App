@@ -21,33 +21,49 @@ export class MoviesService {
 
   private readonly MovieList = new BehaviorSubject<Movies[]>([]);
   readonly Movies$ = this.MovieList.asObservable(); // assinging to Movies the BehaviorSubject MovieList and as an Observable
-  private dataStore = [];
+  private dataStore: any = [];
   private ID: number = 0;
+  private localStorageData: any = [];
 
   public validateYear: Boolean = true;
   public titleError: Boolean = false;
   public validatResults: Boolean = true;
 
+
+  private readonly FavoritesList = new BehaviorSubject<Movie[]>([]);
+  readonly Favorites$ = this.FavoritesList.asObservable();
+  private favoriteData: Array<any> = [];
+
   
-  constructor(private http: HttpClient, private apiVariables: VariablesService) { }
+  constructor(private http: HttpClient, private Variables: VariablesService) {}
 
   
   public getMovies() {
-
-    this.http.get(this.apiVariables._omdbMovies + `${this.apiVariables._allMovies}` + `${this.apiVariables._apiKey}`).subscribe((data: any) => {
-
-      this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest}) ) );
-
-      // assinging by the next() method to MovieList BehaviorSubject, the data stored in Movies$ Observable (above), recived from the API request
-      this.MovieList.next(this.dataStore); 
-    });
+    this.localStorageData = JSON.parse(localStorage.getItem('defaultMovieList'));
+ 
+    if(this.localStorageData){
+      this.dataStore = this.localStorageData;
+    }else {
+      this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).subscribe((data: any) => {
+       
+        this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest}) ) );
+        for (let i=0;i<this.dataStore.length;i++) {
+          if(this.dataStore[i].Poster == 'N/A') 
+            this.dataStore[i].Poster = this.Variables.noPic;
+        }
+        localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
+      });
+    }
+    // assinging by the next() method to MovieList BehaviorSubject, the data stored in Movies$ Observable (above), recived from the API request
+    this.MovieList.next(this.dataStore); 
   }
+  
 
 
   public Search(item) {
     this.validatResults = true;
 
-    this.http.get(this.apiVariables._omdbMovies + `${this.apiVariables._searchMovies}` + item + `${this.apiVariables._apiKey}`).subscribe((data: any) => {
+    this.http.get(this.Variables._omdbMovies + `${this.Variables._searchMovies}` + item + `${this.Variables._apiKey}`).subscribe((data: any) => {
       if(data.Search == undefined)
         this.validatResults = false;
       else {
@@ -65,16 +81,17 @@ export class MoviesService {
     
     if(!this.titleError && this.validateYear) {  
       this.ID++
-      movie = {...movie, imdbID: this.ID, Poster: this.apiVariables.noPic}
+      movie = {...movie, imdbID: this.ID, Poster: this.Variables.noPic}
 
       this.dataStore.push(movie);
+      localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
       this.MovieList.next(this.dataStore);
     }
   }
 
   
   // public getPickedMovie(movieId) {
-  //   this.http.get(this.apiVariables._omdbMovies + `${this.apiVariables._pickedMovie}` + movieId + `${this.apiVariables._apiKey}`).subscribe((data: any) => {
+  //   this.http.get(this.Variables._omdbMovies + `${this.Variables._pickedMovie}` + movieId + `${this.Variables._apiKey}`).subscribe((data: any) => {
   //     console.log( data)
   //     console.log( this.dataStore)
       
@@ -100,7 +117,7 @@ export class MoviesService {
   //  });
   // }
   public getPickedMovie(movieId) : Observable<any> {
-    return this.http.get(this.apiVariables._omdbMovies + `${this.apiVariables._pickedMovie}` + movieId + `${this.apiVariables._apiKey}`);
+    return this.http.get(this.Variables._omdbMovies + `${this.Variables._pickedMovie}` + movieId + `${this.Variables._apiKey}`);
   }
 
 
@@ -115,6 +132,7 @@ export class MoviesService {
 
         if(!this.titleError && this.validateYear) {
           this.dataStore[i] = pickedMovie;
+          localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
           this.MovieList.next(this.dataStore);
         }
       }
@@ -126,6 +144,8 @@ export class MoviesService {
     for(let i=0;i<this.dataStore.length;i++) {
       if(this.dataStore[i].imdbID == movieID) {
         this.dataStore.splice(i,1);
+        localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
+        this.MovieList.next(this.dataStore);
       }
     }
   }
@@ -149,4 +169,35 @@ export class MoviesService {
       this.validateYear = false;
   }
 
+
+
+  addToFavorites(favoritemovie) {
+    this.dataStore.forEach((movie,index) => {
+        
+      if (movie.imdbID === favoritemovie.imdbID) 
+        this.dataStore[index] = {...this.dataStore[index], Favorite: true};
+    });   
+    this.MovieList.next(this.dataStore);      
+
+    this.favoriteData.push(favoritemovie);
+    localStorage.setItem('favoritesList',JSON.stringify(this.favoriteData));
+    this.FavoritesList.next(this.favoriteData);
+  }
+
+  removeFromFavorites(favoriteID) {
+    for (let i=0; i<this.favoriteData.length; i++) {
+      if (this.favoriteData[i].imdbID == favoriteID) {
+        
+        this.favoriteData.splice(i,1);
+        this.FavoritesList.next(this.favoriteData);
+
+        this.dataStore.forEach((movie,index) => {
+        
+          if (movie.imdbID === favoriteID) 
+            this.dataStore[index].Favorite = false;
+        });
+        this.MovieList.next(this.dataStore);
+      }
+    }
+  }
 }

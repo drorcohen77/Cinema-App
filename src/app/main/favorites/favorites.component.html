@@ -1,0 +1,34 @@
+<div class="main_comp">
+
+    <div class="list_movies scroll">
+        <div class="container">
+            <div *ngIf="_Favoriteslist.length == 0" class="alert alert-danger">
+                THERE IS NO MOVIES CHOOSEN AS FAVORITES YET.
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let Favorite of _Favoriteslist;let i=index">
+                    <div class="card-deck">
+                        <div class="card">
+                            <div class="cardPic">
+                                <div class="favorites" (click)='removeFavorite(Favorite.imdbID)'>
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <img class="moviePoster" src="{{Favorite.Poster}}" class="card-img-top" alt="" style="width: 100%; height: 250px;">
+                            </div>
+                            <!-- <img src="{{Favorite.Poster}}" class="card-img-top" alt="" style="width: 100%; height: 250px;"> -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{Favorite.Title | title}}</h5>
+                                <!-- <div class="edit_del_buttons">
+                                    <button class='btn btn-primary p_buttons' (click)='removeFavorite(Favorite.imdbID)'>
+                                      <i class="far fa-heart"></i>
+                                  </button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

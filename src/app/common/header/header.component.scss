@@ -15,6 +15,7 @@
 }
 
 .guest_name {
+    position: relative;
     width: 120px;
     font-size: 16px;
     padding-right: 0px;
@@ -24,4 +25,9 @@
 a {
     text-decoration: none;
     color: purple;
+}
+
+.Name {
+    position: absolute;
+    right: 9px;
 }

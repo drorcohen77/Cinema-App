@@ -8,4 +8,5 @@ export class Movie {
     Genre: string;
     Director: string;
     Poster: string;
+    Favorite: boolean;
 } 

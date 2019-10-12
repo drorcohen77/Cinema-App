@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import { MoviesService } from 'src/app/store/movies.service';
 import { Movie } from 'src/app/shared/movie.model';
+import { VariablesService } from 'src/app/shared/variables.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,9 +19,19 @@ export class NavbarComponent implements OnInit {
   public pickedMovie: Movie;
   
 
-  constructor(private MovieService: MoviesService, private modalService: NgbModal) { }
+  constructor(private MovieService: MoviesService, private modalService: NgbModal,private variables: VariablesService, private nav: Router) { }
 
   ngOnInit() {
+  }
+
+  favorites() {
+    this.variables.backToMain = false;
+    this.nav.navigate(['favorites']);
+  }
+
+  backToMainPage() {
+    this.variables.backToMain = true;
+    this.nav.navigate(['movies']);
   }
 
   addMovie(content) {

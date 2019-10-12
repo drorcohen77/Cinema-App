@@ -11,3 +11,92 @@
     background-image: linear-gradient(#0f4381, #1d73f5);
     color: white;
 }
+
+.cardPic {
+    position: relative;
+}
+
+.favorites {
+    position: absolute;
+    right: 4px;
+    color: rgb(255, 29, 4);
+    padding: 4px;
+    font-size: 25px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.allmovies {
+    margin: 15px;
+}
+
+.card-body {
+    background-color: #f0f0f0;
+}
+
+.card-deck .card {
+    margin: 0px !important;
+    box-shadow: 5px 5px 15px 5px #bebebe;
+}
+
+.card-title {
+    text-align: center;
+    height: 44px;
+}
+
+.card-deck .card:hover {
+    opacity: 1.0;
+    -ms-transform: scale(1.1);
+    /* IE 9 */
+    -webkit-transform: scale(1.1);
+    /* Safari 3-8 */
+    transform: scale(1.1);
+    border: 1px solid #00771c;
+}
+
+.card-footer {
+    background-color: #dfe6f5;
+}
+
+.card-img-main {
+    position: relative;
+}
+
+.scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #666666;
+}
+
+.list_movies {
+    overflow: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 100vh;
+}
+
+.tooltip {
+    width: 200px;
+    opacity: 1!important;
+}
+
+.my-custom-class .tooltip-inner {
+    background-color: white;
+    border: 0.6px solid black;
+    color: black;
+    font-size: 15px;
+}
+
+.my-custom-class .arrow-inner {
+    background-color: white !important;
+    border-top-color: darkgreen;
+}

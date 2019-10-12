@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { VariablesService } from 'src/app/shared/variables.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }

@@ -1,10 +1,10 @@
 <div class="row card-body bg-light middle_fotter">
-    <div class="col-md-6 col-xs-2 col-lg-4 addbutton">
+    <div class="col-md-4 col-xs-2 col-lg-4 addbutton">
         <div>
             <button (click)="addMovie(content)" class="btn btn-primary nav_buttons Administrator">Add Movie</button>
         </div>
     </div>
-    <div class="col-md-6 col-xs-5 col-lg-4 search">
+    <div class="col-md-4 col-xs-5 col-lg-4 search">
         <div id="custom-search-input">
             <div class="input-group">
                 <input type="Search" class="search-query form-control" placeholder="Search for movie" name="Search" [(ngModel)]="item" />
@@ -17,6 +17,12 @@
                     There is to many results please specify your search.
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-2 col-lg-4 addbutton">
+        <div class="favorites-btn">
+            <button *ngIf="variables.backToMain == true" (click)="favorites()" class="btn btn-primary">Favorites</button>
+            <button *ngIf="variables.backToMain == false" (click)="backToMainPage()" class="btn btn-primary">Back To Main</button>
         </div>
     </div>
 </div>

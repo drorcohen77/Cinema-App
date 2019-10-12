@@ -22,30 +22,51 @@ export class MainComponent implements OnInit, OnDestroy {
 
   private modalRef: any;
   private tempMovie: any;  
+  private subscription: any;
   
 
-  constructor(public MovieService: MoviesService, private modalService: NgbModal, private apiVariables: VariablesService) {
-    
-    // using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
-    // the subscribe method get's us to the _value property inside the Observable where the data from the API request is stored
-    // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)/
 
-    this._allMovies$.subscribe(Movie => { 
-      this._movieList = Movie;
-      
-      for (let i=0;i<this._movieList.length;i++) {
-        
-        if(this._movieList[i].Poster == 'N/A')
-          this._movieList[i].Poster = this.apiVariables.noPic;
-      }
-    });
+  constructor(public MovieService: MoviesService, private modalService: NgbModal, private Variables: VariablesService) {
+    
+    this.MovieService.getMovies();
    }
 
 
-  ngOnInit(): void {
-
-    this.MovieService.getMovies()
+  ngOnInit() {
+    this.Variables.backToMain = true;
     
+    // using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
+    // the subscribe method get's us to the _value property inside the Observable where the data from the API request is stored
+    // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)
+
+    this.subscription = this._allMovies$.subscribe(Movie => { 
+      this._movieList = Movie;
+    });
+  }
+
+
+  // async openModal(e,movieDetails,movieID) {
+  //   await this.MovieService.getPickedMovie(movieID).subscribe(
+  //     (Pickedmovie: Movie) => {
+  //       if(this.tempMovie != undefined)
+  //         this.pickedMovie =this.tempMovie;
+  //       else
+  //         this.pickedMovie = Pickedmovie;
+            
+  //     });
+  //   this.modalRef = this.modalService.open(movieDetails);
+  // }
+
+  // closeModal(e) {
+  //   this.modalRef.close();
+  // }
+
+  addFavorite(favoritemovie) {
+    this.MovieService.addToFavorites(favoritemovie);
+  }
+
+  removeFavorite(favoriteID) {
+    this.MovieService.removeFromFavorites(favoriteID);
   }
 
   editMovie(movieID,content) {
@@ -115,7 +136,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() : void {
 
-    this._movieList.unsubscribe()
-    
+    this.subscription.unsubscribe()
   }
 }
