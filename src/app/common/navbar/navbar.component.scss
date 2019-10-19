@@ -52,7 +52,11 @@
 }
 
 .search-query:focus+button {
-    z-index: 3;
+    z-index: 1;
+}
+
+.searchAlert {
+    z-index: 1;
 }
 
 .middle_fotter {

@@ -28,114 +28,115 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(public MovieService: MoviesService, private modalService: NgbModal, private Variables: VariablesService) {
     
-    this.MovieService.getMovies();
+    // this.MovieService.getMovies();
    }
 
-
-  ngOnInit() {
-    this.Variables.backToMain = true;
-    
-    // using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
-    // the subscribe method get's us to the _value property inside the Observable where the data from the API request is stored
-    // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)
-
-    this.subscription = this._allMovies$.subscribe(Movie => { 
-      this._movieList = Movie;
-    });
-  }
-
-
-  // async openModal(e,movieDetails,movieID) {
-  //   await this.MovieService.getPickedMovie(movieID).subscribe(
-  //     (Pickedmovie: Movie) => {
-  //       if(this.tempMovie != undefined)
-  //         this.pickedMovie =this.tempMovie;
-  //       else
-  //         this.pickedMovie = Pickedmovie;
-            
-  //     });
-  //   this.modalRef = this.modalService.open(movieDetails);
-  // }
-
-  // closeModal(e) {
-  //   this.modalRef.close();
-  // }
-
-  addFavorite(favoritemovie) {
-    this.MovieService.addToFavorites(favoritemovie);
-  }
-
-  removeFavorite(favoriteID) {
-    this.MovieService.removeFromFavorites(favoriteID);
-  }
-
-  editMovie(movieID,content) {
-
-    this.pickedMovie = new Movie;
-
-    this.MovieService.getPickedMovie(movieID).subscribe(
-      (Pickedmovie: Movie) => {
-        if(this.tempMovie != undefined)
-          this.pickedMovie =this.tempMovie;
-        else
-          this.pickedMovie = Pickedmovie;
-            
-      },
-      (errorResponse) => {
-        this.errors = errorResponse.error.errors;
-      }
-    );
-
-      // this.MovieService.getPickedMovie(movieID);
+   ngOnInit() {
+     this.Variables.backToMain = true;
      
-      
-    //   await this._allMovies$.subscribe(movies => {
-    //     this._movieList = movies;
-    //     let PickedMovie = this._movieList.find(movie => movieID == movie.imdbID);
-        
-    //     if(this.tempMovie != undefined)
-    //       this.pickedMovie =this.tempMovie;
-    //     else
-    //       this.pickedMovie = PickedMovie;
-        
-    //   },
-    //   (errorResponse) => {
-    //     this.errors = errorResponse.error.errors;
-    //   }
-    // );
-   console.log(this._movieList)
-    this.modalRef = this.modalService.open(content);
-  }
-
-  editSubmition(movie) {
-    this.MovieService.editMovieList(movie);
-
-    if(!this.MovieService.titleError && this.MovieService.validateYear) {
-      this.tempMovie = movie;
-      this.modalRef.close();
-    }
-  }
-
-
-  deletMovie(movieID,delcontent) {
-    for(let i=0;i<this._movieList.length;i++) {
-      if(this._movieList[i].imdbID == movieID) {
-        this.pickedMovie = this._movieList[i];
-      }
-    }
-    this.modalRef = this.modalService.open(delcontent);
-  }
-
-  deletSubmition(movieID) {
-    this.MovieService.deleteMovie(movieID);
+     // using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
+     // the subscribe method get's us to the _value property inside the Observable where the data from the API request is stored
+     // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)
  
-    this.modalRef.close();
-  }
-
+     this.subscription = this._allMovies$.subscribe(Movie => { 
+       this._movieList = Movie;
+     });
+   }
+ 
+ 
+   // async openModal(e,movieDetails,movieID) {
+   //   await this.MovieService.getPickedMovie(movieID).subscribe(
+   //     (Pickedmovie: Movie) => {
+   //       if(this.tempMovie != undefined)
+   //         this.pickedMovie =this.tempMovie;
+   //       else
+   //         this.pickedMovie = Pickedmovie;
+             
+   //     });
+   //   this.modalRef = this.modalService.open(movieDetails);
+   // }
+ 
+   // closeModal(e) {
+   //   this.modalRef.close();
+   // }
+ 
+   addFavorite(favoritemovie) {
+     this.MovieService.addToFavorites(favoritemovie);
+   }
+ 
+   removeFavorite(favoriteID) {
+     this.MovieService.removeFromFavorites(favoriteID);
+   }
+ 
+   editMovie(movie,content) {
+ 
+     this.pickedMovie = new Movie;
+ 
+     this.MovieService.getPickedMovie(movie).subscribe(
+       (Pickedmovie: Movie) => {
+         // if(this.tempMovie != undefined)
+         //   this.pickedMovie =this.tempMovie;
+         // else
+           this.pickedMovie = Pickedmovie;
+           console.log(this.pickedMovie)
+       // },
+       // (errorResponse) => {
+       //   this.errors = errorResponse.error.errors;
+       console.log(this._movieList)
+     this.modalRef = this.modalService.open(content);
+       }
+     );
+ 
+       // this.MovieService.getPickedMovie(movieID);
+      
+       
+     //   await this._allMovies$.subscribe(movies => {
+     //     this._movieList = movies;
+     //     let PickedMovie = this._movieList.find(movie => movieID == movie.imdbID);
+         
+     //     if(this.tempMovie != undefined)
+     //       this.pickedMovie =this.tempMovie;
+     //     else
+     //       this.pickedMovie = PickedMovie;
+         
+     //   },
+     //   (errorResponse) => {
+     //     this.errors = errorResponse.error.errors;
+     //   }
+     // );
+    
+   }
+ 
+   editSubmition() {
+     this.MovieService.editMovieList(this.pickedMovie);
+ 
+     if(!this.MovieService.titleError && this.MovieService.validateYear) {
+       this.tempMovie = this.pickedMovie;
+       this.modalRef.close();
+     }
+   }
+ 
+ 
+   deletMovie(movieID,delcontent) {
+     for(let i=0;i<this._movieList.length;i++) {
+       if(this._movieList[i].imdbID == movieID) {
+         this.pickedMovie = this._movieList[i];
+       }
+     }
+     this.modalRef = this.modalService.open(delcontent);
+   }
+ 
+   deletSubmition(movieID) {
+     this.MovieService.deleteMovie(movieID);
   
+     this.modalRef.close();
+   }
+ 
+   
+ 
+   ngOnDestroy() : void {
+ 
+     this.subscription.unsubscribe()
+   }
 
-  ngOnDestroy() : void {
-
-    this.subscription.unsubscribe()
-  }
 }

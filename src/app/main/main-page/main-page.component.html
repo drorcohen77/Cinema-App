@@ -1,3 +1,173 @@
-<p>
-  main-page works!
-</p>
+<div class="main_comp">
+
+    <div class="list_movies scroll">
+        <div class="container">
+            <div *ngIf="!MovieService.validatResults" class="alert alert-danger">
+                COULD'T FIND THE MOVIE YOU WHERE LOOKING FOR. PLEASE TRY ANOTHER MOVIE NAME.
+            </div>
+            <div class="row">
+                <!-- using async pipe on the *ngFor to access to the allMovies$ (below) Observable insted of using subscribe() in .ts -->
+                <!-- <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of (allMovies$ | async);let i=index"> -->
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index">
+                    <div class="card-deck">
+                        <div class="card">
+                            <div class="cardPic">
+                                <div class="favorites" *ngIf="movie.Favorite == false || movie.Favorite == undifined" (click)='addFavorite(movie)'>
+                                    <i class="far fa-heart" ngbTooltip="Add to Favorites" placement="top" tooltipClass="my-custom-class"></i>
+                                </div>
+                                <div class="favorites" *ngIf="movie.Favorite == true" (click)='removeFavorite(movie.imdbID)'>
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <img class="moviePoster" src="{{movie.Poster}}" class="card-img-top" alt="" style="width: 100%; height: 250px;">
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{movie.Title | title}}</h5>
+                                <div class="edit_del_buttons">
+                                    <button class='btn btn-primary p_buttons' (click)='editMovie(movie,content)'>
+                                      <span class='glyphicon glyphicon-pencil'><i class="fas fa-pencil-alt"></i></span>
+                                  </button>
+                                    <button type="button" class="btn btn-danger del_icon" (click)='deletMovie(movie.imdbID,delcontent)'>
+                                      <i class="far fa-trash-alt"></i>
+                                  </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- (mouseover)="openModal($event,movieDetails,movie.imdbID)" -->
+
+<div class="footer">
+    <p>DOWN FOOTER</p>
+</div>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header add_edit_modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Movie:
+            <p>{{pickedMovie.Title}}</p>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form #editMovie="ngForm">
+                    <div class="form-group">
+                        <label for="Title">Title</label>
+                        <input [(ngModel)]="pickedMovie.Title" name="Title" type="text" class="form-control" id="Title" required #Title="ngModel">
+                        <div *ngIf="Title.invalid && (Title.dirty || Title.touched)" class="alert alert-danger">
+                            <div *ngIf="Title.errors.required">
+                                Title is required.
+                            </div>
+                        </div>
+                        <div *ngIf="MovieService.titleError" class="alert alert-danger">
+                            There is already a movie with that Title.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Year">Year</label>
+                        <input [(ngModel)]="pickedMovie.Year" name="Year" type="Year" class="form-control" id="Year" required #Year="ngModel">
+                        <div *ngIf="Year.invalid && (Year.dirty || Year.touched)" class="alert alert-danger">
+                            <div *ngIf="Year.errors.required" class="alert alert-danger">
+                                Year is required.
+                            </div>
+                        </div>
+                        <div *ngIf="!MovieService.validateYear" class="alert alert-danger">
+                            Year is not in right format 'YYYY'.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Runtime">Runtime</label>
+                        <input [(ngModel)]="pickedMovie.Runtime" name="Runtime" type="Runtime" class="form-control" id="Runtime" required #Runtime="ngModel">
+                        <div *ngIf="Runtime.invalid && (Runtime.dirty || Runtime.touched)" class="alert alert-danger">
+                            <div *ngIf="Runtime.errors.required">
+                                Runtime is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Genre">Genre</label>
+                        <input [(ngModel)]="pickedMovie.Genre" name="Genre" type="Genre" class="form-control" id="Genre" required #Genre="ngModel">
+                        <div *ngIf="Genre.invalid && (Genre.dirty || Genre.touched)" class="alert alert-danger">
+                            <div *ngIf="Genre.errors.required">
+                                Genre is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Director">Director</label>
+                        <input [(ngModel)]="pickedMovie.Director" name="Director" type="Director" class="form-control" id="Director" required #Director="ngModel">
+                        <div *ngIf="Director.invalid && (Director.dirty || Director.touched)" class="alert alert-danger">
+                            <div *ngIf="Director.errors.required">
+                                Director is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="errors.length > 0" class="alert alert-danger modal-error">
+                        <p *ngFor="let error of errors">
+                            {{error.detail}}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button [disabled]="!editMovie.form.valid" (click)="editSubmition()" type="button" class="btn btn-success">Edit Movie</button>
+                        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #delcontent let-c="close" let-d="dismiss">
+    <div class="modal-header del_modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{pickedMovie.Title}} is going to be deleted!</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete {{pickedMovie.Title}} movie?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="deletSubmition(pickedMovie.imdbID)">Ok</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+    </div>
+</ng-template>
+
+
+<!-- <ng-template #movieDetails>
+  <div class="modal-header add_edit_modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Movie details:
+      </h4>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="col-md-12">
+              <span class="Title">Title:</span>
+              <p>{{pickedMovie.Title}}</p>
+              <span class="Year">Year:</span>
+              <p>{{pickedMovie.Year}}</p>
+              <span class="Runtime">Runtime:</span>
+              <p>{{pickedMovie.Runtime}}</p>
+              <span class="Genre">Genre:</span>
+              <p>{{pickedMovie.Genre}}</p>
+              <span class="Director">Director:</span>
+              <p>{{pickedMovie.Director}}</p>
+          </div>
+          <div class="modal-footer">
+              <button *ngIf="errors.length > 0" (click)="addFavorite(pickedMovie)" type="button">Edit Movie</button>
+              <button *ngIf="errors.length > 0" (click)="removeFavorite(pickedMovie)" type="button">Cancel</button>
+          </div>
+      </div>
+  </div>
+</ng-template> -->

@@ -56,6 +56,7 @@ export class NavbarComponent implements OnInit {
     }else{
       this.MovieService.Search(this.item)
     }
+    this.item = '';
   }
 
 }
