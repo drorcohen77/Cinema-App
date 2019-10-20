@@ -23,7 +23,7 @@ export class MoviesService {
 
   private readonly MovieList = new BehaviorSubject<Movies[]>([]);
   readonly Movies$ = this.MovieList.asObservable(); // assinging to Movies the BehaviorSubject MovieList and as an Observable
-  private dataStore: any = [];
+  public dataStore: any = [];
   private ID: number = 0;
   private localStorageData: any = [];
 
@@ -34,7 +34,7 @@ export class MoviesService {
 
   private readonly FavoritesList = new BehaviorSubject<Movie[]>([]);
   readonly Favorites$ = this.FavoritesList.asObservable();
-  private favoriteData: Array<any> = [];
+  private favoriteData: any = [];
 
   
   constructor(private http: HttpClient, private Variables: VariablesService) {}
@@ -48,7 +48,7 @@ export class MoviesService {
     }else {
       this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).subscribe((data: any) => {
        
-        this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest}) ) );
+        this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest,Favorite: false}) ) );
         for (let i=0;i<this.dataStore.length;i++) {
           if(this.dataStore[i].Poster == 'N/A') 
             this.dataStore[i].Poster = this.Variables.noPic;
@@ -66,14 +66,12 @@ export class MoviesService {
     this.validatResults = true;
     
     await this.http.get(this.Variables._omdbMovies + `${this.Variables._searchMovies}` + item + `${this.Variables._apiKey}`).subscribe((data: any) => {
-      console.log(data.Search)
+      
       if(data.Search == undefined)
         this.validatResults = false;
       else {
         let tempList = JSON.parse(localStorage.getItem('favoritesList'))
-        // let tempMovie = tempList.find(item => item.imdbID == data.Search.imdbID);
         // if (tempList.some(movie => data.includes(movie)))
-        console.log(tempList)
         for (let i=0;i<data.Search.length;i++) {
           for (let j=0;j<tempList.length;j++) {
             if (data.Search[i].imdbID == tempList[j].imdbID) {
@@ -81,14 +79,8 @@ export class MoviesService {
             }
           }
         }
-        // tempList.forEach(movie => {
-        //   if (movie.Favorite) {
-
-        //   }
-        // })
-        console.log(data.Search)
+        
         this.dataStore = [...data.Search.map( ({Type,...rest}) => ({...rest}) )];
-        console.log(this.dataStore)
         localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
         this.MovieList.next(this.dataStore);
       }
@@ -114,30 +106,20 @@ export class MoviesService {
 
   public getPickedMovie(movie) : Observable<any> {
     let tempMovie = this.dataStore.find(item => item.imdbID == movie.imdbID);
-    console.log(movie)
-    if (tempMovie.Favorite !== undefined) {
-      console.log('THERE IS FAVORITE')
-      return of(tempMovie);
+
+    if (tempMovie.Favorite !== undefined && tempMovie.Runtime !== undefined) {
+      return of(tempMovie);// the of() method turns tempMovie into an Observable
+
     }else{
       return this.http.get(this.Variables._omdbMovies + `${this.Variables._pickedMovie}` + tempMovie.imdbID + `${this.Variables._apiKey}`)
                       .pipe(
                         map((data: any) => {
-                      console.log(data)
-                          // for (let i=0; i<this.dataStore.length; i++) {
-                        
-                            // if (movie.imdbID === data.imdbID) {
                               tempMovie = {...tempMovie,
                                 Runtime: data.Runtime,
                                 Genre: data.Genre,
-                                Director: data.Director,
-                                Favorite: false
+                                Director: data.Director
                               }
-                              // data = tempMovie;
-                            console.log(tempMovie)
                               return tempMovie;
-                        // break;
-                            // }     
-                          // };
                         })
                       );
     } 
@@ -153,16 +135,17 @@ export class MoviesService {
         this.validatYear(pickedMovie);
 
         if(!this.titleError && this.validateYear) {
-          // if(pickedMovie.Favorite == true) {
           
-          // }
           this.dataStore[i] = pickedMovie;
           localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
-          localStorage.setItem('favoritesList',JSON.stringify(this.dataStore[i]));
+
+          let tempData = JSON.parse(localStorage.getItem('favoritesList'));
+          let index = tempData.findIndex(item => item.imdbID == pickedMovie.imdbID); //can be also written like: tempData.map(x => { return x.VehicleId; }).indexOf(pickedMovie.imdbID);
+          tempData[index] = pickedMovie;
+          localStorage.setItem('favoritesList',JSON.stringify(tempData));
+
           this.MovieList.next(this.dataStore);
         }
-
-        
       }
     }
   }
@@ -186,8 +169,8 @@ export class MoviesService {
     this.dataStore.forEach((movie) =>{
       if(movie.Title.toLowerCase() == pickedMovie.Title.toLowerCase() && movie.imdbID != pickedMovie.imdbID){
         this.titleError = true;
-        }
-      });
+      }
+    });
   }
 
 
@@ -200,23 +183,35 @@ export class MoviesService {
   }
 
 
+  public getFavorites() {
+    let favoritesStorag = JSON.parse(localStorage.getItem('favoritesList'));
+
+    if(favoritesStorag)
+      this.favoriteData = favoritesStorag;
+      
+    // assinging by the next() method to FavoritesList BehaviorSubject, the data stored in Favorites$ Observable
+    this.FavoritesList.next(this.favoriteData);
+  }
 
   addToFavorites(favoritemovie) {
-    console.log(JSON.parse(localStorage.getItem('defaultMovieList')))
+
     for (let i=0; i<this.dataStore.length; i++) {
        
       if (this.dataStore[i].imdbID === favoritemovie.imdbID) {
+
         this.dataStore[i] = {...this.dataStore[i], Favorite: true};
+
         let tempData = JSON.parse(localStorage.getItem('defaultMovieList'));
-        console.log(tempData)
+        
         localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
         favoritemovie = this.dataStore[i];
         break;
       }
     };   
     this.MovieList.next(this.dataStore);  
-    
+    console.log(favoritemovie,this.favoriteData)
     this.favoriteData.push(favoritemovie);
+    
     localStorage.setItem('favoritesList',JSON.stringify(this.favoriteData));
     this.FavoritesList.next(this.favoriteData);
   }

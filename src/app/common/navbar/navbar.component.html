@@ -21,7 +21,16 @@
     </div>
     <div class="col-md-4 col-xs-2 col-lg-4 addbutton">
         <div class="favorites-btn">
-            <button *ngIf="variables.backToMain == true" (click)="favorites()" class="btn btn-primary">Favorites</button>
+            <!-- <button *ngIf="variables.backToMain == true" (click)="favorites()" class=""> -->
+            <button type="button" class="favoritesCounter btn btn-light" *ngIf="variables.backToMain == true" (click)="favorites()">
+                <span class="p1" data-count="">
+                              <!--     <i class="p2 fa fa-circle fa-stack-2x"></i> -->
+                                  <i class="p3 far fa-heart" data-count=""></i>
+                                  <i class="favorites_quantity">{{_FavoritesNumber}}</i>
+                                </span>
+            </button>
+            <!-- </button> -->
+            <!-- <button *ngIf="variables.backToMain == true" (click)="favorites()" class="btn btn-primary">Favorites</button> -->
             <button *ngIf="variables.backToMain == false" (click)="backToMainPage()" class="btn btn-primary">Back To Main</button>
         </div>
     </div>

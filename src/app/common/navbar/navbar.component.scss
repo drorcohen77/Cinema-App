@@ -67,3 +67,28 @@
     margin-left: 0px;
     background-color: #83282a !important;
 }
+
+// .favoritesCounter {
+// position: relative;
+// top: 25px;
+// width: 50px;
+// background: white;
+// border-radius: 20px !important;
+// }
+.favorites_quantity {
+    position: absolute;
+    color: white;
+    background: red;
+    border-radius: 50% !important;
+    width: 25px;
+    left: 30px;
+    top: -7px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.p3 {
+    font-size: 25px;
+    color: red;
+}

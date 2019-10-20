@@ -80,11 +80,11 @@ export class MainPageComponent implements OnInit {
         //   this.pickedMovie =this.tempMovie;
         // else
           this.pickedMovie = Pickedmovie;
-          console.log(this.pickedMovie)
+
       // },
       // (errorResponse) => {
       //   this.errors = errorResponse.error.errors;
-      console.log(this._movieList)
+
     this.modalRef = this.modalService.open(content);
       }
     );

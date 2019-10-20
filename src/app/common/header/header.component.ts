@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VariablesService } from 'src/app/shared/variables.service';
+import { MoviesService } from 'src/app/store/movies.service';
 
 
 @Component({
@@ -9,11 +9,20 @@ import { VariablesService } from 'src/app/shared/variables.service';
 })
 export class HeaderComponent implements OnInit {
 
-  
+  // private readonly _Favorites$ = this.MovieService.Favorites$;
+  // private _FavoritesNumber: number ;
 
-  constructor() {}
+
+  constructor(private MovieService: MoviesService) {
+    // this.MovieService.getFavorites();
+  }
 
   ngOnInit() {
+    
+    // this._Favorites$.subscribe(item => {
+      
+    //   this._FavoritesNumber = item.length;
+    // });
   }
 
   

@@ -17,11 +17,20 @@ export class NavbarComponent implements OnInit {
   private modalRef: any;
   
   public pickedMovie: Movie;
+
+  private readonly _Favorites$ = this.MovieService.Favorites$;
+  private _FavoritesNumber: number ;
   
 
-  constructor(private MovieService: MoviesService, private modalService: NgbModal,private variables: VariablesService, private nav: Router) { }
+  constructor(private MovieService: MoviesService, private modalService: NgbModal,private variables: VariablesService, private nav: Router) {
+    this.MovieService.getFavorites();
+   }
 
   ngOnInit() {
+    this._Favorites$.subscribe(item => {
+      
+      this._FavoritesNumber = item.length;
+    });
   }
 
   favorites() {
