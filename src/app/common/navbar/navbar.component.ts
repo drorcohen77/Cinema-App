@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   private _FavoritesNumber: number ;
   
 
-  constructor(private MovieService: MoviesService, private modalService: NgbModal,private variables: VariablesService, private nav: Router) {
+  constructor(private MovieService: MoviesService, private modalService: NgbModal,public variables: VariablesService, private nav: Router) {
     this.MovieService.getFavorites();
    }
 

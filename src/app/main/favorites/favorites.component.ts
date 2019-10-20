@@ -10,7 +10,7 @@ export class FavoritesComponent implements OnInit {
 
 
   private readonly _Favorites$ = this.MovieService.Favorites$;
-  private _Favoriteslist: any = [];
+  public _Favoriteslist: any = [];
 
 
   constructor(public MovieService: MoviesService) {
