@@ -46,22 +46,6 @@ export class MainPageComponent implements OnInit {
   }
 
 
-  // async openModal(e,movieDetails,movieID) {
-  //   await this.MovieService.getPickedMovie(movieID).subscribe(
-  //     (Pickedmovie: Movie) => {
-  //       if(this.tempMovie != undefined)
-  //         this.pickedMovie =this.tempMovie;
-  //       else
-  //         this.pickedMovie = Pickedmovie;
-            
-  //     });
-  //   this.modalRef = this.modalService.open(movieDetails);
-  // }
-
-  // closeModal(e) {
-  //   this.modalRef.close();
-  // }
-
   addFavorite(favoritemovie) {
     this.MovieService.addToFavorites(favoritemovie);
   }
@@ -76,37 +60,10 @@ export class MainPageComponent implements OnInit {
 
     this.MovieService.getPickedMovie(movie).subscribe(
       (Pickedmovie: Movie) => {
-        // if(this.tempMovie != undefined)
-        //   this.pickedMovie =this.tempMovie;
-        // else
-          this.pickedMovie = Pickedmovie;
-
-      // },
-      // (errorResponse) => {
-      //   this.errors = errorResponse.error.errors;
-
-    this.modalRef = this.modalService.open(content);
+        this.pickedMovie = Pickedmovie;
+        this.modalRef = this.modalService.open(content);
       }
     );
-
-      // this.MovieService.getPickedMovie(movieID);
-     
-      
-    //   await this._allMovies$.subscribe(movies => {
-    //     this._movieList = movies;
-    //     let PickedMovie = this._movieList.find(movie => movieID == movie.imdbID);
-        
-    //     if(this.tempMovie != undefined)
-    //       this.pickedMovie =this.tempMovie;
-    //     else
-    //       this.pickedMovie = PickedMovie;
-        
-    //   },
-    //   (errorResponse) => {
-    //     this.errors = errorResponse.error.errors;
-    //   }
-    // );
-   
   }
 
   editSubmition() {

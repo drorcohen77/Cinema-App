@@ -22,7 +22,9 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">{{movie.Title | title}}</h5>
+                                <div class="movie-title">
+                                    <h5 class="card-title">{{movie.Title | title}}</h5>
+                                </div>
                                 <div class="edit_del_buttons">
                                     <button class='btn btn-primary p_buttons' (click)='editMovie(movie,content)'>
                                       <span class='glyphicon glyphicon-pencil'><i class="fas fa-pencil-alt"></i></span>
@@ -38,9 +40,7 @@
             </div>
         </div>
     </div>
-
 </div>
-<!-- (mouseover)="openModal($event,movieDetails,movie.imdbID)" -->
 
 <div class="footer">
     <p>DOWN FOOTER</p>

@@ -1,12 +1,10 @@
     .addbutton {
         width: 120px;
         padding-right: 0px;
-        // margin-right: 10px;
     }
     
     .search {
         width: 180px;
-        // padding-left: 0px;
         padding-right: 0px;
     }
     
@@ -55,6 +53,10 @@
         margin-right: 0px;
         margin-left: 0px;
         background-color: #83282a !important;
+    }
+    
+    .movie-title {
+        margin-bottom: 55px;
     }
     
     .del_icon {

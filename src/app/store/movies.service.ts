@@ -95,10 +95,11 @@ export class MoviesService {
     
     if(!this.titleError && this.validateYear) {  
       this.ID++
-      movie = {...movie, imdbID: this.ID, Poster: this.Variables.noPic}
-
+      movie = {...movie, imdbID: this.ID, Poster: this.Variables.noPic, Favorite: false}
+      
       this.dataStore.push(movie);
       localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
+      
       this.MovieList.next(this.dataStore);
     }
   }
@@ -106,8 +107,8 @@ export class MoviesService {
 
   public getPickedMovie(movie) : Observable<any> {
     let tempMovie = this.dataStore.find(item => item.imdbID == movie.imdbID);
-
-    if (tempMovie.Favorite !== undefined && tempMovie.Runtime !== undefined) {
+    
+    if (tempMovie.Favorite !== undefined && tempMovie.Runtime !== undefined) {console.log(tempMovie)
       return of(tempMovie);// the of() method turns tempMovie into an Observable
 
     }else{
@@ -138,12 +139,13 @@ export class MoviesService {
           
           this.dataStore[i] = pickedMovie;
           localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
-
+          
           let tempData = JSON.parse(localStorage.getItem('favoritesList'));
-          let index = tempData.findIndex(item => item.imdbID == pickedMovie.imdbID); //can be also written like: tempData.map(x => { return x.VehicleId; }).indexOf(pickedMovie.imdbID);
-          tempData[index] = pickedMovie;
-          localStorage.setItem('favoritesList',JSON.stringify(tempData));
-
+          if(tempData) {
+            let index = tempData.findIndex(item => item.imdbID == pickedMovie.imdbID); //can be also written like: tempData.map(x => { return x.VehicleId; }).indexOf(pickedMovie.imdbID);
+            tempData[index] = pickedMovie;
+            localStorage.setItem('favoritesList',JSON.stringify(tempData));
+          }
           this.MovieList.next(this.dataStore);
         }
       }
@@ -188,7 +190,7 @@ export class MoviesService {
 
     if(favoritesStorag)
       this.favoriteData = favoritesStorag;
-      
+
     // assinging by the next() method to FavoritesList BehaviorSubject, the data stored in Favorites$ Observable
     this.FavoritesList.next(this.favoriteData);
   }
@@ -209,7 +211,7 @@ export class MoviesService {
       }
     };   
     this.MovieList.next(this.dataStore);  
-    console.log(favoritemovie,this.favoriteData)
+    
     this.favoriteData.push(favoritemovie);
     
     localStorage.setItem('favoritesList',JSON.stringify(this.favoriteData));
@@ -234,4 +236,5 @@ export class MoviesService {
       }
     }
   }
+
 }

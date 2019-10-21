@@ -2,7 +2,6 @@
     position: relative;
     width: 120px;
     padding-right: 0px;
-    // margin-right: 10px;
 }
 
 .favorites-btn {
@@ -12,7 +11,6 @@
 
 .search {
     width: 180px;
-    // padding-left: 0px;
     padding-right: 0px;
 }
 
@@ -56,7 +54,9 @@
 }
 
 .searchAlert {
-    z-index: 1;
+    position: absolute;
+    width: 402px;
+    top: 40px;
 }
 
 .middle_fotter {
@@ -68,13 +68,6 @@
     background-color: #83282a !important;
 }
 
-// .favoritesCounter {
-// position: relative;
-// top: 25px;
-// width: 50px;
-// background: white;
-// border-radius: 20px !important;
-// }
 .favorites_quantity {
     position: absolute;
     color: white;

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MoviesService } from 'src/app/store/movies.service';
 
 
 @Component({
@@ -9,22 +8,11 @@ import { MoviesService } from 'src/app/store/movies.service';
 })
 export class HeaderComponent implements OnInit {
 
-  // private readonly _Favorites$ = this.MovieService.Favorites$;
-  // private _FavoritesNumber: number ;
 
-
-  constructor(private MovieService: MoviesService) {
-    // this.MovieService.getFavorites();
-  }
+  constructor() {}
 
   ngOnInit() {
-    
-    // this._Favorites$.subscribe(item => {
-      
-    //   this._FavoritesNumber = item.length;
-    // });
-  }
 
-  
+  }
 
 }
