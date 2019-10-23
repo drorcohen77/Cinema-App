@@ -11,19 +11,15 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-// import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import { FavoritesGuard } from '../shared/favorites.guard';
+import { HttpClientModule } from '@angular/common/http';
 
 
-// const routes: Routes = [
-//   {
-//     path:'manage',
-//     component:MainComponent,
-//     children:[
-//         {path: 'movies', component: MainComponent, canActivate: [AuthGuard]},
-//         {path: 'favorites', component: FavoritesComponent,canActivate: [AuthGuard]}
-//     ]
-//   }
-// ]
+const routes: Routes = [
+        {path: 'movies', component: MainPageComponent},
+        {path: 'favorites', component: FavoritesComponent, canActivate: [FavoritesGuard]}
+      ]
 
 
 @NgModule({
@@ -36,11 +32,12 @@ import { BrowserModule } from '@angular/platform-browser';
   imports: [
     CommonModule,
     FormsModule,
+    HttpClientModule,
     NgbModule.forRoot(),
-    // RouterModule.forChild(routes),
+    RouterModule.forChild(routes),
     BrowserAnimationsModule,
     BrowserModule
   ],
-  providers: [MoviesService]
+  providers: [MoviesService,FavoritesGuard]
 })
 export class MainModule { }

@@ -35,12 +35,12 @@ export class NavbarComponent implements OnInit {
 
   favorites() {
     this.variables.backToMain = false;
-    this.nav.navigate(['favorites']);
+    this.nav.navigate(['/favorites']);
   }
 
   backToMainPage() {
     this.variables.backToMain = true;
-    this.nav.navigate(['movies']);
+    this.nav.navigate(['/movies']);
   }
 
   addMovie(content) {

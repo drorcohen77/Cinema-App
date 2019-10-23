@@ -18,7 +18,17 @@ export class FavoritesService {
 
   constructor(private http: HttpClient, private Variables: VariablesService, private MoviesService: MoviesService) { }
 
+  // canActivate(
+  //   route: ActivatedRouteSnapshot,
+  //   state: RouterStateSnapshot): boolean {
+  //   this.url = state.url;
 
+  //   if(this.auth.isAuthenticated()) {
+  //       return this.handleAuthState();
+  //   }
+
+  //   return this.handleNotAuthState()
+  // }
   // addToFavorites(favoritemovie) {
   //   console.log(JSON.parse(localStorage.getItem('defaultMovieList')))
   //   for (let i=0; i<this.MoviesService.dataStore.length; i++) {
