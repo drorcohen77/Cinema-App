@@ -8,12 +8,21 @@
             <div class="row">
                 <!-- using async pipe on the *ngFor to access to the allMovies$ (below) Observable insted of using subscribe() in .ts -->
                 <!-- <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of (allMovies$ | async);let i=index"> -->
-                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index">
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index" placement="right" tooltipClass="my-custom-class" ngbTooltip="Title: 
+                                  {{movie.Title}}
+                                  Year:
+                                  {{movie.Year}}
+                                  Runtime:
+                                  {{movie.Runtime}}
+                                  Genre:
+                                  {{movie.Genre}}
+                                  Director:
+                                  {{movie.Director}}">
                     <div class="card-deck">
                         <div class="card">
                             <div class="cardPic">
                                 <div class="favorites" *ngIf="movie.Favorite == false || movie.Favorite == undifined" (click)='addFavorite(movie)'>
-                                    <i class="far fa-heart" ngbTooltip="Add to Favorites" placement="top" tooltipClass="my-custom-class"></i>
+                                    <i class="far fa-heart"></i>
                                 </div>
                                 <div class="favorites" *ngIf="movie.Favorite == true" (click)='removeFavorite(movie.imdbID)'>
                                     <i class="fas fa-heart"></i>

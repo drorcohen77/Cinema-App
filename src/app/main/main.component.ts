@@ -1,9 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MoviesService } from '../store/movies.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as moment from 'moment';
-import { Movie } from '../shared/movie.model';
-import { VariablesService } from '../shared/variables.service';
+import { Component, OnInit } from '@angular/core';
+
 
 
 @Component({
@@ -13,84 +9,9 @@ import { VariablesService } from '../shared/variables.service';
 })
 export class MainComponent implements OnInit {
 
-  
-  private readonly _allMovies$ = this.MovieService.Movies$
-  public _movieList: any = []; // when using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
- 
-  public pickedMovie: Movie;
-  public errors: any[] = [];
+  constructor() {}
 
-  private modalRef: any;
-  private tempMovie: any;  
-  private subscription: any;
-  
+   ngOnInit() {}
 
-
-  constructor(public MovieService: MoviesService, private modalService: NgbModal, private Variables: VariablesService) {}
-
-   ngOnInit() {
-  //    this.Variables.backToMain = true;
-     
-     // using subscribe() to access to the allMovies$ (above) Observable insted of using async pipe on the *ngFor
-     // the subscribe method get's us to the _value property inside the Observable where the data from the API request is stored
-     // after we get access to the allMovies$ by subscription, we can manipulate the data (in this case te moveiList array)
- 
-  //    this.subscription = this._allMovies$.subscribe(Movie => { 
-  //      this._movieList = Movie;
-  //    });
-   }
-
- 
-  //  addFavorite(favoritemovie) {
-  //    this.MovieService.addToFavorites(favoritemovie);
-  //  }
- 
-  //  removeFavorite(favoriteID) {
-  //    this.MovieService.removeFromFavorites(favoriteID);
-  //  }
- 
-  //  editMovie(movie,content) {
- 
-  //    this.pickedMovie = new Movie;
- 
-  //    this.MovieService.getPickedMovie(movie).subscribe(
-  //      (Pickedmovie: Movie) => {
-  //         this.pickedMovie = Pickedmovie;
-  //         this.modalRef = this.modalService.open(content);
-  //      }
-  //    );
-  //  }
- 
-  //  editSubmition() {
-  //    this.MovieService.editMovieList(this.pickedMovie);
- 
-  //    if(!this.MovieService.titleError && this.MovieService.validateYear) {
-  //      this.tempMovie = this.pickedMovie;
-  //      this.modalRef.close();
-  //    }
-  //  }
- 
- 
-  //  deletMovie(movieID,delcontent) {
-  //    for(let i=0;i<this._movieList.length;i++) {
-  //      if(this._movieList[i].imdbID == movieID) {
-  //        this.pickedMovie = this._movieList[i];
-  //      }
-  //    }
-  //    this.modalRef = this.modalService.open(delcontent);
-  //  }
- 
-  //  deletSubmition(movieID) {
-  //    this.MovieService.deleteMovie(movieID);
-  
-  //    this.modalRef.close();
-  //  }
- 
-   
- 
-  //  ngOnDestroy() : void {
- 
-  //    this.subscription.unsubscribe()
-  //  }
 
 }

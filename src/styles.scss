@@ -86,18 +86,19 @@
 }
 
 .tooltip {
-    width: 200px;
+    width: 600px;
     opacity: 1!important;
 }
 
 .my-custom-class .tooltip-inner {
     background-color: white;
-    border: 0.6px solid black;
-    color: black;
+    border: 1px solid gray;
+    color: rgb(65, 65, 65);
     font-size: 15px;
+    white-space: pre-line;
+    text-align: left;
 }
 
-.my-custom-class .arrow-inner {
-    background-color: white !important;
-    border-top-color: darkgreen;
+.my-custom-class .arrow::before {
+    border-top-color: white;
 }

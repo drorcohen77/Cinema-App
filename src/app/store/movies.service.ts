@@ -62,10 +62,10 @@ export class MoviesService {
   
 
 
-  public async Search(item) {
+  public Search(item) {
     this.validatResults = true;
     
-    await this.http.get(this.Variables._omdbMovies + `${this.Variables._searchMovies}` + item + `${this.Variables._apiKey}`).subscribe((data: any) => {
+    this.http.get(this.Variables._omdbMovies + `${this.Variables._searchMovies}` + item + `${this.Variables._apiKey}`).subscribe((data: any) => {
       
       if(data.Search == undefined)
         this.validatResults = false;
@@ -108,7 +108,7 @@ export class MoviesService {
   public getPickedMovie(movie) : Observable<any> {
     let tempMovie = this.dataStore.find(item => item.imdbID == movie.imdbID);
     
-    if (tempMovie.Favorite !== undefined && tempMovie.Runtime !== undefined) {console.log(tempMovie)
+    if (tempMovie.Favorite !== undefined && tempMovie.Runtime !== undefined) {
       return of(tempMovie);// the of() method turns tempMovie into an Observable
 
     }else{
