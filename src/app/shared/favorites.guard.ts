@@ -14,7 +14,7 @@ export class FavoritesGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
 
     if(this.Variables.backToMain) {
-        this.nav.navigate(['movies']);
+        this.nav.navigate(['main/movies']);
         return false;
     }
     return true;

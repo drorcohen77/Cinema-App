@@ -6,7 +6,7 @@
                 THERE IS NO MOVIES CHOOSEN AS FAVORITES YET.
             </div>
             <div class="row">
-                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let Favorite of _Favoriteslist;let i=index" placement="right" tooltipClass="my-custom-class" ngbTooltip="Title: 
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let Favorite of _Favoriteslist;let i=index" placement="right" ngbPopover="Title: 
                                 {{Favorite.Title}}
                                 Year:
                                 {{Favorite.Year}}
@@ -15,7 +15,7 @@
                                 Genre:
                                 {{Favorite.Genre}}
                                 Director:
-                                {{Favorite.Director}}">
+                                {{Favorite.Director}}" [openDelay]="300" [closeDelay]="500" triggers="mouseenter:mouseleave">
                     <div class="card-deck">
                         <div class="card">
                             <div class="cardPic">
@@ -35,3 +35,4 @@
         </div>
     </div>
 </div>
+<!-- tooltipClass="my-custom-class"  -->

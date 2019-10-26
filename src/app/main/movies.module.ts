@@ -17,9 +17,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 const routes: Routes = [
-        {path: 'movies', component: MainPageComponent},
-        {path: 'favorites', component: FavoritesComponent, canActivate: [FavoritesGuard]}
-      ]
+  {
+    path:'main',
+    component:MainComponent,
+    children:[
+      {path: 'movies', component: MainPageComponent},
+      {path: 'favorites', component: FavoritesComponent, canActivate: [FavoritesGuard]}
+    ]
+  }
+]
 
 
 @NgModule({

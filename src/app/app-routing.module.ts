@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '',
-    redirectTo: '/movies',
+    redirectTo: 'main/movies',
     pathMatch:'full'
   }
 ];

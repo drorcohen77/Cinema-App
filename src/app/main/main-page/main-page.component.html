@@ -8,7 +8,7 @@
             <div class="row">
                 <!-- using async pipe on the *ngFor to access to the allMovies$ (below) Observable insted of using subscribe() in .ts -->
                 <!-- <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of (allMovies$ | async);let i=index"> -->
-                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index" placement="right" tooltipClass="my-custom-class" ngbTooltip="Title: 
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index" placement="right" tooltipClass="my-custom-class" ngbPopover="Title: 
                                   {{movie.Title}}
                                   Year:
                                   {{movie.Year}}
@@ -17,7 +17,7 @@
                                   Genre:
                                   {{movie.Genre}}
                                   Director:
-                                  {{movie.Director}}">
+                                  {{movie.Director}}" [openDelay]="300" [closeDelay]="500" triggers="mouseenter:mouseleave">
                     <div class="card-deck">
                         <div class="card">
                             <div class="cardPic">
@@ -152,31 +152,3 @@
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
     </div>
 </ng-template>
-
-
-<!-- <ng-template #movieDetails>
-  <div class="modal-header add_edit_modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Movie details:
-      </h4>
-  </div>
-  <div class="modal-body">
-      <div class="row">
-          <div class="col-md-12">
-              <span class="Title">Title:</span>
-              <p>{{pickedMovie.Title}}</p>
-              <span class="Year">Year:</span>
-              <p>{{pickedMovie.Year}}</p>
-              <span class="Runtime">Runtime:</span>
-              <p>{{pickedMovie.Runtime}}</p>
-              <span class="Genre">Genre:</span>
-              <p>{{pickedMovie.Genre}}</p>
-              <span class="Director">Director:</span>
-              <p>{{pickedMovie.Director}}</p>
-          </div>
-          <div class="modal-footer">
-              <button *ngIf="errors.length > 0" (click)="addFavorite(pickedMovie)" type="button">Edit Movie</button>
-              <button *ngIf="errors.length > 0" (click)="removeFavorite(pickedMovie)" type="button">Cancel</button>
-          </div>
-      </div>
-  </div>
-</ng-template> -->
