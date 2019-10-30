@@ -1,4 +1,4 @@
-<div class="row card-body bg-light middle_fotter">
+<div *ngIf="!isMobile" class="row card-body bg-light middle_fotter">
     <div class="col-md-4 col-xs-2 col-lg-4 addbutton">
         <div>
             <button (click)="addMovie(content)" class="btn btn-primary nav_buttons Administrator">Add Movie</button>
@@ -14,7 +14,7 @@
                 </button>
                 </span>
                 <div *ngIf="!validatSearch" class="alert alert-danger searchAlert">
-                    There is to many results please, specify your search
+                    There is to many results, please specify your search
                 </div>
             </div>
         </div>
@@ -33,51 +33,36 @@
 </div>
 
 
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light middle_fotter">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+<div *ngIf="isMobile" class="card-body bg-light middle_fotter">
+    <div *ngIf="!openSearch" class="row">
+        <button (click)="addMovie(content)" class="col btn btn-light nav-btn"><i class="fas fa-plus-circle"></i></button>
+
+        <button (click)="openSearchBar()" class="col btn btn-light nav-btn"><i class="fas fa-search"></i></button>
+
+        <button type="button" class="col btn btn-light nav-btn" *ngIf="variables.backToMain == true" (click)="favorites()">
+            <i class="mobile_p3 far fa-heart" data-count=""><i class="mobile_favorites_quantity">{{_FavoritesNumber}}</i></i>
         </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01"> -->
-<!-- <a class="navbar-brand" href="#">Hidden brand</a> -->
-<!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <div>
-                    <button (click)="addMovie(content)" class="btn btn-primary nav_buttons Administrator">Add Movie</button>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="favorites-btn">
-                    <button type="button" class="favoritesCounter btn btn-light" *ngIf="variables.backToMain == true" (click)="favorites()">
-                                        <span class="p1" data-count="">
-                                            <i class="p3 far fa-heart" data-count=""></i>
-                                            <i class="favorites_quantity">{{_FavoritesNumber}}</i>
-                                        </span>
-                                    </button>
-                    <button *ngIf="variables.backToMain == false" (click)="backToMainPage()" class="btn btn-primary">Back To Main</button>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div id="custom-search-input">
-                    <div class="input-group">
-                        <input type="Search" class="search-query form-control" placeholder="Search for movie" name="Search" [(ngModel)]="item" />
-                        <span class="input-group-btn">
-                                          <button class="btn btn-warning" type="submit" (click)="searchMovie()">
-                                              <span><i class="fas fa-search"></i></span>
-                        </button>
-                        </span>
-                        <div *ngIf="!validatSearch" class="alert alert-danger searchAlert">
-                            There is to many results please, specify your search
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul> -->
-<!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
-<!-- </div>
-</nav> -->
+
+        <button *ngIf="variables.backToMain == false" (click)="backToMainPage()" class="col btn btn-light nav-btn"><i class="fas fa-chevron-circle-left"></i></button>
+    </div>
+
+    <div *ngIf="openSearch" class="row" id="custom-search-input">
+        <div class="col-9 input-group">
+            <input type="Search" class="search-query form-control" placeholder="Search for movie" name="Search" [(ngModel)]="item" />
+            <span class="input-group-btn">
+            <button class="btn btn-warning" type="submit" (click)="searchMovie()">
+                <span><i class="fas fa-search"></i></span>
+            </button>
+            </span>
+            <div *ngIf="!validatSearch" class="alert alert-danger mobile_searchAlert">
+                To many results, please specify your search
+            </div>
+        </div>
+        <div class="col-3">
+            <button (click)="openSearchBar()" class="col-lg-3 btn btn-light nav-btn"><i class="fas fa-chevron-circle-left"></i></button>
+        </div>
+    </div>
+</div>
 
 
 <ng-template #content let-c="close" let-d="dismiss">

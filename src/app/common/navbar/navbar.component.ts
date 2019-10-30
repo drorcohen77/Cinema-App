@@ -12,6 +12,8 @@ import { VariablesService } from 'src/app/shared/variables.service';
 })
 export class NavbarComponent implements OnInit {
 
+  private readonly isMobile: Boolean;
+  private openSearch: Boolean;
   public validatSearch: Boolean = true;
   public item:string = '';
   private modalRef: any;
@@ -23,6 +25,8 @@ export class NavbarComponent implements OnInit {
   
 
   constructor(private MovieService: MoviesService, private modalService: NgbModal,public variables: VariablesService, private nav: Router) {
+    this.isMobile = window.innerWidth < 768;
+   
     this.MovieService.getFavorites();
    }
 
@@ -57,6 +61,15 @@ export class NavbarComponent implements OnInit {
     
   }
 
+  openSearchBar(){
+    if(this.openSearch == false || this.openSearch == undefined)
+      this.openSearch = true;
+    else
+      this.openSearch = false;
+      this.validatSearch = true;
+      this.MovieService.validatResults = true;
+  }
+
   searchMovie() {
     this.validatSearch = true;
 
@@ -64,6 +77,7 @@ export class NavbarComponent implements OnInit {
       this.validatSearch = false;
     }else{
       this.MovieService.Search(this.item)
+      this.openSearch = false;
     }
     this.item = '';
   }

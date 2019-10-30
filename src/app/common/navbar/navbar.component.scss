@@ -85,3 +85,35 @@
     font-size: 25px;
     color: red;
 }
+
+.mobile_p3 {
+    position: relative;
+    font-size: 31px;
+    color: white;
+}
+
+.mobile_favorites_quantity {
+    position: absolute;
+    border-radius: 50% !important;
+    width: 25px;
+    left: 3px;
+    top: 7px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.nav-btn {
+    background-color: #83282a !important;
+    border-color: #83282a !important;
+    color: white;
+    font-size: 25px;
+    padding: 0px;
+}
+
+.mobile_searchAlert {
+    position: absolute;
+    width: 325px;
+    font-size: 15px;
+    top: 40px;
+}
