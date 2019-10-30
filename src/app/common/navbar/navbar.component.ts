@@ -12,7 +12,7 @@ import { VariablesService } from 'src/app/shared/variables.service';
 })
 export class NavbarComponent implements OnInit {
 
-  private readonly isMobile: Boolean;
+  public readonly isMobile: Boolean;
   private openSearch: Boolean;
   public validatSearch: Boolean = true;
   public item:string = '';
