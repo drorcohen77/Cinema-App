@@ -19,7 +19,7 @@
                                   Director:
                                   {{movie.Director}}" [openDelay]="300" [closeDelay]="500" triggers="mouseenter:mouseleave">
                     <div class="card-deck">
-                        <div class="card">
+                        <div [ngClass]="{'card': !Variables.isMobile ,'': Variables.isMobile}">
                             <div class="cardPic">
                                 <div class="favorites" *ngIf="movie.Favorite == false || movie.Favorite == undifined" (click)='addFavorite(movie)'>
                                     <i class="far fa-heart"></i>

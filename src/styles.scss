@@ -39,10 +39,17 @@
     box-shadow: 5px 5px 15px 5px #bebebe;
 }
 
-.card-title {
-    text-align: center;
-    height: 44px;
-    margin-bottom: 30px !important;
+.movie-title {
+    flex: 1;
+    min-width: 0;
+    .card-title {
+        text-align: center;
+        height: 44px;
+        // margin-bottom: 30px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .card-deck .card:hover {

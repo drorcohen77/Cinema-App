@@ -17,7 +17,7 @@
                                 Director:
                                 {{Favorite.Director}}" [openDelay]="300" [closeDelay]="500" triggers="mouseenter:mouseleave">
                     <div class="card-deck">
-                        <div class="card">
+                        <div [ngClass]="{'card': !Variables.isMobile ,'': Variables.isMobile}">
                             <div class="cardPic">
                                 <div class="favorites" (click)='removeFavorite(Favorite.imdbID)'>
                                     <i class="fas fa-heart"></i>
@@ -26,7 +26,9 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">{{Favorite.Title | title}}</h5>
+                                <div class="movie-title">
+                                    <h5 class="card-title">{{Favorite.Title | title}}</h5>
+                                </div>
                             </div>
                         </div>
                     </div>

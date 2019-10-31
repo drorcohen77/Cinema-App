@@ -54,9 +54,12 @@
 }
 
 .searchAlert {
-    position: absolute;
-    width: 402px;
-    top: 40px;
+    // position: absolute;
+    // width: 402px;
+    // top: 40px;
+    padding: 5px !important;
+    margin-bottom: 0px !important;
+    white-space: nowrap;
 }
 
 .middle_fotter {
@@ -112,8 +115,13 @@
 }
 
 .mobile_searchAlert {
-    position: absolute;
-    width: 325px;
+    padding: 4px !important;
+    margin-bottom: 0px !important;
+    white-space: nowrap;
+    // position: absolute;
+    // width: 307px;
     font-size: 15px;
-    top: 40px;
+    // top: 40px;
+    // padding-left: 12px;
+    // padding-right: 7px;
 }

@@ -13,8 +13,11 @@ export class VariablesService {
   public readonly _searchMovies = "s=";
   public noPic: string = 'assets/images/no_images.png';
   public backToMain: boolean = true;
+  public readonly isMobile: Boolean;
 
 
-  constructor() { }
+  constructor() {
+    this.isMobile = window.innerWidth < 768;
+  }
 
 }

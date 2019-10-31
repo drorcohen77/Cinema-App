@@ -1,4 +1,4 @@
-<div *ngIf="!isMobile" class="row card-body bg-light middle_fotter">
+<div *ngIf="!variables.isMobile" class="row card-body bg-light middle_fotter">
     <div class="col-md-4 col-xs-2 col-lg-4 addbutton">
         <div>
             <button (click)="addMovie(content)" class="btn btn-primary nav_buttons Administrator">Add Movie</button>
@@ -33,7 +33,7 @@
 </div>
 
 
-<div *ngIf="isMobile" class="card-body bg-light middle_fotter">
+<div *ngIf="variables.isMobile" class="card-body bg-light middle_fotter">
     <div *ngIf="!openSearch" class="row">
         <button (click)="addMovie(content)" class="col btn btn-light nav-btn"><i class="fas fa-plus-circle"></i></button>
 

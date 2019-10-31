@@ -28,7 +28,7 @@ export class MainPageComponent implements OnInit {
 
 
   constructor(public MovieService: MoviesService, private modalService: NgbModal, private Variables: VariablesService) {
-    
+    console.log(Variables.isMobile)
     this.MovieService.getMovies();
    }
 

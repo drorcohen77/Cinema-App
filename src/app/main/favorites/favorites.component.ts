@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'src/app/store/movies.service';
+import { VariablesService } from 'src/app/shared/variables.service';
 
 @Component({
   selector: 'app-favorites',
@@ -13,7 +14,7 @@ export class FavoritesComponent implements OnInit {
   public _Favoriteslist: any = [];
 
 
-  constructor(public MovieService: MoviesService) {
+  constructor(public MovieService: MoviesService, private Variables: VariablesService) {
     this.MovieService.getFavorites();
   }
 
