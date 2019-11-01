@@ -55,13 +55,14 @@
         background-color: #83282a !important;
     }
     
-    .del_icon {
-        position: absolute;
-        right: 0px;
+    .p_buttons {
+        text-align: center;
     }
     
-    .edit_del_buttons {
+    .info_modal-header {
         position: relative;
+        color: white;
+        background-image: linear-gradient(#037283, #17a2b8);
     }
     
     .del_modal-header {

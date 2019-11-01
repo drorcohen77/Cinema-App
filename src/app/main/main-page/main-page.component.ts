@@ -20,6 +20,7 @@ export class MainPageComponent implements OnInit {
  
   public pickedMovie: Movie;
   public errors: any[] = [];
+  public details: boolean = false;
 
   private modalRef: any;
   private tempMovie: any;  
@@ -45,6 +46,12 @@ export class MainPageComponent implements OnInit {
     });
   }
 
+  showDetails(){
+    if(this.details == false)
+      this.details = true;
+    else
+      this.details = false;
+  }
 
   addFavorite(favoritemovie) {
     this.MovieService.addToFavorites(favoritemovie);
@@ -73,6 +80,16 @@ export class MainPageComponent implements OnInit {
       this.tempMovie = this.pickedMovie;
       this.modalRef.close();
     }
+  }
+
+
+  infoMovie(movie,infocontent){
+    this.MovieService.getPickedMovie(movie).subscribe(
+      (infoMovie: Movie) => {
+        this.pickedMovie = infoMovie;
+        this.modalRef = this.modalService.open(infocontent);
+      }
+    );
   }
 
 
