@@ -26,20 +26,21 @@
                                     <h5 class="card-title">{{movie.Title | title}}</h5>
                                 </div>
                                 <div class="row edit_del_buttons">
-                                    <div class='col p_buttons'>
+                                    <div [ngClass]="(Variables.isMobile) ? 'col mobile_buttons' : 'col-lg-4 buttons'">
+                                        <!--Another way for ngClass: [ngClass]="{'col p_buttons': Variables.isMobile ,'col-lg-4 p_buttons': !Variables.isMobile}" -->
                                         <button class='btn btn-primary' (click)='editMovie(movie,content)'>
-                                      <span class='glyphicon glyphicon-pencil'><i class="fas fa-pencil-alt"></i></span>
-                                  </button>
+                                          <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
-                                    <div class='col p_buttons'>
+                                    <div [ngClass]="(Variables.isMobile) ? 'col mobile_buttons' : 'col-lg-4 buttons'">
                                         <button class='btn btn-info' (click)='infoMovie(movie,infocontent)'>
-                                      <span class='glyphicon glyphicon-pencil'><i class="fas fa-info-circle"></i></span>
-                                  </button>
+                                          <i class="fas fa-info-circle"></i>
+                                        </button>
                                     </div>
-                                    <div class='col p_buttons'>
+                                    <div [ngClass]="(Variables.isMobile) ? 'col mobile_buttons' : 'col-lg-4 buttons'">
                                         <button type="button" class="btn btn-danger" (click)='deletMovie(movie.imdbID,delcontent)'>
-                                      <i class="far fa-trash-alt"></i>
-                                  </button>
+                                          <i class="far fa-trash-alt"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
