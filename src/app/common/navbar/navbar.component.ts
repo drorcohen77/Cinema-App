@@ -12,7 +12,7 @@ import { VariablesService } from 'src/app/shared/variables.service';
 })
 export class NavbarComponent implements OnInit {
 
-  public readonly isMobile: Boolean;
+  // public readonly isMobile: Boolean;
   private openSearch: Boolean;
   public validatSearch: Boolean = true;
   public item:string = '';
@@ -77,6 +77,7 @@ export class NavbarComponent implements OnInit {
       this.validatSearch = false;
     }else{
       this.MovieService.Search(this.item)
+      this.backToMainPage();
       this.openSearch = false;
     }
     this.item = '';
