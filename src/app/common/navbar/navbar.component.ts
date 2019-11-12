@@ -76,7 +76,7 @@ export class NavbarComponent implements OnInit {
     if(this.item.length==0) {
       this.validatSearch = false;
     }else{
-      this.MovieService.Search(this.item)
+      this.MovieService.Search(this.item);
       this.backToMainPage();
       this.openSearch = false;
     }

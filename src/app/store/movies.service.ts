@@ -5,7 +5,7 @@ import { VariablesService } from '../shared/variables.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { of } from 'rxjs/internal/observable/of';
 import 'rxjs/add/operator/do'
-import { map } from "rxjs/operators";
+import { map,tap } from "rxjs/operators";
 import * as moment from 'moment';
 import { Movie } from '../shared/movie.model';
 
@@ -46,7 +46,7 @@ export class MoviesService {
     if(this.localStorageData){
       this.dataStore = this.localStorageData;
     }else {
-      this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).subscribe((data: any) => {
+      return this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).pipe(map((data: any) => {
        
         this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest,Favorite: false}) ) );
         for (let i=0;i<this.dataStore.length;i++) {
@@ -54,7 +54,9 @@ export class MoviesService {
             this.dataStore[i].Poster = this.Variables.noPic;
         }
         localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
-      });
+        // return data
+      })
+      );
     }
     // assinging by the next() method to MovieList BehaviorSubject, the data stored in Movies$ Observable (above), recived from the API request
     this.MovieList.next(this.dataStore); 
