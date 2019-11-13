@@ -46,7 +46,7 @@ export class MoviesService {
     if(this.localStorageData){
       this.dataStore = this.localStorageData;
     }else {
-      return this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).pipe(map((data: any) => {
+      return this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).pipe(tap((data: any) => {
        
         this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest,Favorite: false}) ) );
         for (let i=0;i<this.dataStore.length;i++) {
@@ -54,7 +54,6 @@ export class MoviesService {
             this.dataStore[i].Poster = this.Variables.noPic;
         }
         localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
-        // return data
       })
       );
     }
