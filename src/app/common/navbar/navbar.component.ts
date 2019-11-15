@@ -25,7 +25,6 @@ export class NavbarComponent implements OnInit {
   
 
   constructor(private MovieService: MoviesService, private modalService: NgbModal,public variables: VariablesService, private nav: Router) {
-    // this.isMobile = window.innerWidth < 768;
    
     this.MovieService.getFavorites();
    }
@@ -68,6 +67,7 @@ export class NavbarComponent implements OnInit {
       this.openSearch = false;
       this.validatSearch = true;
       this.MovieService.validatResults = true;
+      this.MovieService.LoadSpiner = false;
   }
 
   searchMovie() {

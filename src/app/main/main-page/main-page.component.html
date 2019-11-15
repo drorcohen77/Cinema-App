@@ -2,10 +2,18 @@
 
     <div class="list_movies scroll">
         <div class="container">
+            <div *ngIf="MovieService.LoadSpiner && MovieService.validatResults" style="text-align: center;">
+                <div class="lds-ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <div *ngIf="!MovieService.validatResults" class="alert alert-danger">
                 COULD'T FIND THE MOVIE YOU WHERE LOOKING FOR. PLEASE TRY ANOTHER MOVIE NAME.
             </div>
-            <div class="row">
+            <div *ngIf="!MovieService.LoadSpiner" class="row">
                 <!-- using async pipe on the *ngFor to access to the allMovies$ (below) Observable insted of using subscribe() in .ts -->
                 <!-- <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of (allMovies$ | async);let i=index"> -->
                 <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index">

@@ -30,7 +30,7 @@ export class MoviesService {
   public validateYear: Boolean = true;
   public titleError: Boolean = false;
   public validatResults: Boolean = true;
-
+  public LoadSpiner: Boolean = false;
 
   private readonly FavoritesList = new BehaviorSubject<Movie[]>([]);
   readonly Favorites$ = this.FavoritesList.asObservable();
@@ -42,20 +42,22 @@ export class MoviesService {
   
   public getMovies() {
     this.localStorageData = JSON.parse(localStorage.getItem('defaultMovieList'));
- 
+    
     if(this.localStorageData){
       this.dataStore = this.localStorageData;
     }else {
-      return this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`).pipe(tap((data: any) => {
-       
-        this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest,Favorite: false}) ) );
-        for (let i=0;i<this.dataStore.length;i++) {
-          if(this.dataStore[i].Poster == 'N/A') 
-            this.dataStore[i].Poster = this.Variables.noPic;
-        }
-        localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
-      })
-      );
+      this.http.get(this.Variables._omdbMovies + `${this.Variables._allMovies}` + `${this.Variables._apiKey}`)
+                .pipe(tap((data: any) => {
+                  this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest,Favorite: false}) ) );
+                  for (let i=0;i<this.dataStore.length;i++) {
+                    if(this.dataStore[i].Poster == 'N/A') {
+                      this.dataStore[i].Poster = this.Variables.noPic;
+                    }
+                  }
+                  localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
+                  return this.dataStore;
+                }))
+                .subscribe();
     }
     // assinging by the next() method to MovieList BehaviorSubject, the data stored in Movies$ Observable (above), recived from the API request
     this.MovieList.next(this.dataStore); 
@@ -65,13 +67,15 @@ export class MoviesService {
 
   public Search(item) {
     this.validatResults = true;
-    
+    this.LoadSpiner = true;
+    let tempList: Movie[] = JSON.parse(localStorage.getItem('defaultMovieList'))
+
     this.http.get(this.Variables._omdbMovies + `${this.Variables._searchMovies}` + item + `${this.Variables._apiKey}`).subscribe((data: any) => {
       
-      if(data.Search == undefined)
+      if(data.Search == undefined){
         this.validatResults = false;
+      }
       else {
-        let tempList = JSON.parse(localStorage.getItem('favoritesList'))
         // if (tempList.some(movie => data.includes(movie)))
         for (let i=0;i<data.Search.length;i++) {
           for (let j=0;j<tempList.length;j++) {
@@ -83,6 +87,8 @@ export class MoviesService {
         
         this.dataStore = [...data.Search.map( ({Type,...rest}) => ({...rest}) )];
         localStorage.setItem('defaultMovieList',JSON.stringify(this.dataStore));
+        
+        this.LoadSpiner = false;
         this.MovieList.next(this.dataStore);
       }
     });
