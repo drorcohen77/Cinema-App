@@ -16,7 +16,7 @@
             <div *ngIf="!MovieService.LoadSpiner" class="row">
                 <!-- using async pipe on the *ngFor to access to the allMovies$ (below) Observable insted of using subscribe() in .ts -->
                 <!-- <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of (allMovies$ | async);let i=index"> -->
-                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" *ngFor="let movie of _movieList;let i=index">
+                <div class="col-lg-2 col-md-3 col-xs-12 allmovies" style="width: 92%;" *ngFor="let movie of _movieList;let i=index">
                     <div class="card-deck">
                         <div [ngClass]="{'card': !Variables.isMobile ,'': Variables.isMobile}">
                             <div class="cardPic">
